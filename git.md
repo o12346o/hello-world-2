@@ -20,12 +20,16 @@
     git config --global user.name "用户邮箱"
     git remote add origin 仓库地址 //链接远程仓库
     
+    git remote rm origin //删除链接远程仓库
+    git remote set-url origin <url>  // 修改远程仓库地址
+    
     //将本地的master分支推送到origin主机的master分支。如果后者不存在，则会被新建。
     
     git push -u origin master //-u指明默认仓库，然后推送到远程仓库
     git push origin master //推送到远程仓库
     
     git push //推送到默认仓库
+    
 
 ## 3、git 两人协作-非冲突
 
