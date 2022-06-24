@@ -29,7 +29,6 @@
     git push origin master //推送到远程仓库
     
     git push //推送到默认仓库
-    
 
 ## 3、git 两人协作-非冲突
 
