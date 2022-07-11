@@ -515,6 +515,152 @@ xhr.upload.onprogress = function(e){
 
 ## 5.1 jQuery实现文件上传
 
+1、定义 UI 结构
+
+```html
+<script src="./jquery.js">
+
+<input type="file" id="file1" />
+<button id="btnUpload">上传</button>
+```
+
+2、验证是否选择了文件
+
+```javascript
+$('#btnUpload').on('click',function(){
+    var files = $('#file1')[0].files
+    if(files.length <= 0){
+        return alert('请选择图片后在上传！')
+    }
+})
+```
+
+3、向 FormData 中追加文件
+
+```javascript
+// 1、创建 FormData 对象
+var fd = new FormData()
+// 2、向 FormData 中追加文件
+fd.append('avater', files[0])
+```
+
+4、使用jQuery发起上传文件的请求
+
+```javascript
+$.ajax({
+    method: 'POST',
+    url: 'http://www.baidu.com',
+    data: fd,
+    // 不修改 content-Type 属性，使用 FormData 默认的 content-Type 值
+    contentType: false,
+    //
+    processData: false,
+    success: function(res){
+        console.log(res)
+    }
+})
+```
+
 ## 5.2 jQuery实现loading效果
 
+**1、ajaxStart(callback)**
+
+Ajax 请求开始时，执行 ajaxStart 函数。可以在 ajaxStart 的 callback 中显示 loading 效果：
+
+```javascript
+$(document).ajaxStart(function(){
+    $('#loading').show()    
+})
+```
+
+注意：$(document).ajaxStart() 会监听当前文档内所有的 Ajax 请求。
+
+**2、ajaxStop(callback)**
+
+Ajax 请求结束时，执行 ajaxStart 函数。可以在 ajaxStart 的 callback 中隐藏 loading 效果：
+
+```javascript
+$(document).ajaxStop(function(){
+    $('#loading').hide()    
+})
+```
+
 # 6、axios
+
+## 6.1 什么是axios
+
+Axios 是专注于网络数据请求的库。
+
+相比于原生的 XMLHttpRequset 对象，axios 简单通用。
+
+相比于 jQuery ，axios 更加轻量化，只专注于网络数据请求。
+
+## 6.2 axios发起GET请求
+
+axios 发起 GET 时的语法：
+
+```javascript
+axios.get('url', { params: { /*参数*/ } }).then(callback)
+```
+
+具体的示例：
+
+```javascript
+var url = 'http://www.baidu.com'
+var paramsObj = {name: 'jack', age: 20}
+axios.get(url, { params: paramsObj }).then(function(res){
+    var result = res.data
+    console.log(result)
+})
+```
+
+### 6.3axios发起POST请求
+
+axios 发起 POST 时的语法：
+
+```javascript
+axios.post('url', { /*参数*/ } ).then(callback)
+```
+
+具体的示例：
+
+```javascript
+var url = 'http://www.baidu.com'
+var paramsObj = {name: 'jack', age: 20}
+axios.post(url, paramsObj).then(function(res){
+    var result = res.data
+    console.log(result)
+})
+```
+
+## 6.4 直接使用axios发起请求
+
+1、axios 发起 GET 时的语法：
+
+```javascript
+axios({
+    method: 'GET',
+    url: 'http://www.baidu.com',
+    params: { // GET 数据通过 params 属性提供
+        name: 'jack',
+        age: 18
+    }
+}).then(function(res){
+    console.log(res.data)
+})
+```
+
+2、axios 发起 POST 时的语法：
+
+```javascript
+axios({
+    method: 'POSt',
+    url: 'http://www.baidu.com',
+    data: { // POST 数据通过 data 属性提供
+        name: 'jack',
+        age: 18
+    }
+}).then(function(res){
+    console.log(res.data)
+})
+```
