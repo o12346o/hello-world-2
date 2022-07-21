@@ -861,3 +861,62 @@ res.setHeader('Access-Control-Allow-Methods', '*')
 预检请求的特点：客户端与服务器之间会发送两次请求，OPTION 预检请求成功之后，才会发起真正的请求。
 
 ## 4.6 编写JSOPNP接口
+
+**1、JSONP的概念**
+
+浏览器通过 script 标签的 src 属性，球球服务器上的数据，同时，服务器返回一个函数的调用，这种请求数据的方式叫做 JSONP。
+
+**2、创建 JSONP 接口的注意事项**
+
+如果项目中已经配置了 CORS 跨域资源共享，为了防止冲突，必须在配置 CORS 中间件之前声明 JSONP 的接口。否则，JSONP 接口会被处理成开启了 CORS 的接口。
+
+```javascript
+// 先创建 jsonp 接口
+app.get('/api/jsonp', (req, res) => {})
+
+// 再配置 cors 中间件（后续所有的接口，都会被处理成 cors 接口）
+app,.use(cors())
+
+// 这是一个开启了 CORS 的接口
+app.get('/api/get', (req, res) => {})
+```
+
+**3、实现 JSONP 接口的步骤**
+
+1. 获取客户端发送过来的回调函数的名字
+
+2. 得到要通过 JSONP 形式发送给客户端的数据
+
+3. 根据前两步得到的数据，拼接出一个函数调用的字符串
+
+4. 把上一步拼接好的字符串，响应给客户端的 script 标签进行解析执行
+
+**4、实现 JSONP 接口的具体代码**
+
+```javascript
+// 1、 获取客户端发送过来的回调函数的名字
+const funcName = req.query.callback
+// 2、 得到要通过 JSONP 形式发送给客户端的数据
+const data = {name: 'jack', age: 18}
+// 3、 根据前两步得到的数据，拼接出一个函数调用的字符串
+const scriptStr = `${funcName}(${JSON.stringify(data)})`
+// 4、 把上一步拼接好的字符串，响应给客户端的 script 标签进行解析执行
+res.send(scriptStr)
+```
+
+**5、在网页中使用 jQuery 发起 JSONP 请求** 
+
+调用 \$.ajax() 函数，提供 JSONP 的配置选项，从而发起 JSONP 请求。
+
+```javascript
+$('#btnJSONP').on('click', function () {
+      $.ajax({
+        type: 'GET',
+        url: 'http://127.0.0.1/api/jsonp',
+        dataType: 'jsonp',
+        success: function (res) {
+          console.log(res)
+        }
+      })
+    })
+```
