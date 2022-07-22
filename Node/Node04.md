@@ -506,6 +506,12 @@ app.post('/api/logout', (req, res) => {
 })
 ```
 
+**6、session的过期时间**
+
+session 和 cookie 一样，默认在浏览关闭后失效。重新打开浏览器后原来的 session 已经不存在。
+
+可以设置 session 和cookie 的过期时间，使得在浏览器重启后，仍能使用原来的 session 和 cookie 。
+
 ## 5.5 JWT 认证机制
 
 **1、Session 认证的局限性**
@@ -519,3 +525,147 @@ Session 认证机制需要配合 cookie 才能实现。由于 cookie 默认不�
 - 当前端需要跨域请求后端接口的时候，不推荐使用 Session 身份认证机制，推荐使用 JWT 认证机制。
 
 **2、什么是 JWT**
+
+JWT（JSON Web Token）是目前最流行的跨域认证解决方案。
+
+**3、JWT 的工作原理**
+
+![](C:\Users\maxuanbo\AppData\Roaming\marktext\images\2022-07-21-20-39-59-image.png)
+
+用户的信息通过 Token 字符串的形式，保存在客户端浏览器中，服务器通过还原 Token 字符串的形式来认证用户的身份。
+
+**4、JWT 的组成部分**
+
+JWT 通常由三部分组成，分别是 Header（头部）、Payload（有效载荷）、Signature（签名）。
+
+三者之间用英文的句号分隔，格式如下：
+
+```
+Header.Payload.Signature
+```
+
+**5、JWT 的三个部分各自代表的含义**
+
+- Payload 部分才是真正的用户信息，它是用户信息经过加密后生成的字符串。
+
+- Header 和 Signature 是安全性相关的部分，只是为了保证 Token 的安全性。
+
+![](C:\Users\maxuanbo\AppData\Roaming\marktext\images\2022-07-22-09-30-28-image.png)
+
+**6、JWT 的使用方式**
+
+客户端收到服务器返回的 JWT 后，会将它存储在 localStorage 或 sessionStorage 中。
+
+此后，客户端每次与服务器通信，都要带上这个 JWT 字符串，从而进行身份认证。推荐的做法是把 JWT 放在 HTTP 请求头的 Authorization 字段中，格式如下：
+
+```
+Authorization: Bearer <token>
+```
+
+## 5.6 在 Express 中使用 JWT
+
+**1、安装 JWT 相关的包**
+
+```powershell
+npm install jsonwebtoken express-jwt
+```
+
+其中：
+
+- jsonwebtoken 用于生成 JWT 字符串
+
+- express-jwt 用于将 JWT 字符串解析还原成 JSON 对象
+
+**2、导入 JWT 相关的包**
+
+```javascript
+const jwt = require('jsonwebtoken')
+const expressJWT = require('express-jwt')
+```
+
+**3、定义 secret 密钥**
+
+为了保证 JWT 字符串的安全性，防止 JWT 字符串在网络传输过程中被别人破解，需要专门定义一个用于加密和解密的 secret 密钥：
+
+- 当生成 JWT 字符串的时候，需要使用 secret 密钥对用户的信息进行加密，最终得到加密好的 JWT 字符串。
+
+- 当把 JWT 字符串解析还原成 JSON 对象的时候，需要使用 secret 密钥进行解密。
+
+```javascript
+// secret 密钥的本质就是一个字符串
+const secretKey = 'jack'
+```
+
+**4、在登录成功后生成 JWT 字符串**
+
+调用 jsonwebtoken 提供的 sign() 方法，将用户的信息加密成 JWT 字符串，响应给客户端：
+
+```javascript
+// 登录接口
+app.post('/api/login', function(req, res) {
+  // 登录失败的代码...
+  // 登录成功
+  // TODO 03:在登录成功之后，调用 jwt.sign() 方法生成 JEWT 字符串，并通过 token 属性发送给客户端
+  // 参数1：用户的信息对象
+  // 参数2：加密的密钥
+  // 参数3：配置对象，可以配置当前 token 的有效期
+  const tokenStr = jwt.sign({username: userinfo.username}, secretKey, {expiresIn: '30s'})
+  res.send({
+    status: 200,
+    msg: '登录成功！',
+    token: tokenStr, // 要发送给客户端的 token 字符串
+  })
+})
+```
+
+**5、将 JWT 字符串还原为 JSON 对象**
+
+客户端每次在访问那些有权限接口的时候，都需要主动通过请求头中的 Authorization 字段，将 Token 字符串发送到服务器进行身份认证。
+
+此时，服务器可以通过 express-jwt 这个中间件，自动将客户端发送过来的 Token 解析还原成 JSON 对象。
+
+```javascript
+// TODO 04:注册将 JWT 字符串解析还原成 JHON 对象的中间件
+// expressJWt({secret: secretKey}) 就是用来解析 Token 的中间件
+// .unless({path: [/^\/api\//] }) 用来指定哪些接口不需要访问权限
+app.use(expressJWt({secret: secretKey})).unless({path: [/^\/api\//] })
+```
+
+**6、使用 req.auth 获取用户信息**
+
+当 express-jwt 这个中间件配置成功之后，即可在哪些有权限的接口中，使用 req.auth 对象，来访问 JWT 字符串中解析出来的用户信息了。
+
+```javascript
+// 这是一个有权限的接口
+app.get('/admin/getinfo', function(req, res) {
+  // TODO 05:使用 req.user 获取用户信息，并使用 data 属性将用户的信息发送给客户端
+  console.log(req.auth)
+  res.send({
+    status: 200,
+    msg: '获取用户信息成功！',
+    data: req.auth // 要发送给客户端的用户信息
+  })
+})
+```
+
+**7、捕获解析 JWT 失败后产生的错误**
+
+当使用 express-jwt 解析 Token 字符串时，如果客户端发送过来的 Token 字符串过期或不合法，会产生一个解析失败的错误，影响项目的正常运行。我们可以通过 Express 的错误中间件，捕获这个错误并进行相关的处理。
+
+```javascript
+// TODO 06:使用全局错误处理中间件，捕获解析 JWT 失败后产生的错误
+app.use((err, req, res, next) => {
+  // 这次错误是由 token 解析失败导致的
+  if(err.name === 'UnauthorizedError'){
+    return res.send({
+      status: 401,
+      msg: '无效的token'
+    })
+  }
+  // 其他原因导致的错误
+  res.send({
+    status: 500,
+    msg: '未知的错误'
+  })
+})
+```
