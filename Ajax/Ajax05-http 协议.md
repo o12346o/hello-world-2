@@ -30,8 +30,6 @@ HTTP 协议采用了 请求/响应 的交互模型。
 
 ![](C:\Users\maxuanbo\AppData\Roaming\marktext\images\2022-07-11-15-23-36-image.png)
 
-
-
 # 2、HTTP请求
 
 ## 2.1 什么时HTTP请求消息
@@ -117,8 +115,6 @@ HTTP响应消息由状态行、响应头部、空行 和 响应体 4 个部分�
 响应体中存放的，是服务器响应给客户端的资源内容。
 
 ![](C:\Users\maxuanbo\AppData\Roaming\marktext\images\2022-07-11-15-47-22-image.png)
-
-
 
 # 4、HTTP 请求方法
 

@@ -103,7 +103,7 @@ $.get('https://www.baidu.com', function(res){
 }
 ```
 
-**2、发起不带参数的请求**
+**2、发起带参数的请求**
 
 ```javascript
 $.get('https://www.baidu.com', {id: 1}, function(res){
@@ -186,7 +186,7 @@ $.ajax({
 
 使用 Ajax 请求数据时，被请求的 url 地址，就叫做数据接口（简称接口）。同时，每个接口必须有请求方式。
 
-接口测试工具：postman。****
+接口测试工具：postman。
 
 ### 4.1 接口文档
 

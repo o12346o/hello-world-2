@@ -140,9 +140,9 @@ serialize() 函数的好处：可以一次性获取到表单中的所有数据�
 
 ```html
 <form id="form">
-<input type="text" name="username">
-<input type="password" name="password">
-<button type="submit">提交</button>
+  <input type="text" name="username">
+  <input type="password" name="password">
+  <button type="submit">提交</button>
 </form>
 ```
 

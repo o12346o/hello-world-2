@@ -30,7 +30,7 @@ npm install -g sass
 
 ## 2.1 使用介绍
 
-创建一个 runoob-test.scss 文件，内容为：
+创建一个 test.scss 文件，内容为：
 
 ```scss
 /* 定义变量与值 */
@@ -49,12 +49,12 @@ body {
 然后在命令行输入下面命令,
 
 ```powershell
-sass runoob-test.scss 
+sass test.scss 
 ```
 
-即将 .scss 文件转化的 css 代码：
+即将 .scss 文件转化的 css 代码打印出来：
 
-```css
+```powershell
 @charset "UTF-8";
 /* 定义变量与值 */
 /* 使用变量 */
@@ -70,10 +70,10 @@ body {
 我们也可以在后面再跟一个 .css 文件名，将代码保存到文件中,
 
 ```powershell
-sass runoob-test.scss runoob-test.css
+sass test.scss test.css
 ```
 
-会在当前目录下生成 runoob-test.css 文件，代码如下：
+会在当前目录下生成 test.css 文件，代码如下：
 
 ```css
 @charset "UTF-8";
@@ -85,7 +85,7 @@ body {
   font-size: 18px;
 }
 
-/*# sourceMappingURL=runoob-test.css.map */
+/*# sourceMappingURL=test.css.map */
 ```
 
 # 3、Sass 变量
@@ -247,29 +247,32 @@ nav a {
 在 Sass 中，我们可以使用嵌套属性来编写它们：
 
 ```scss
-font: {
-  family: Helvetica, sans-serif;
-  size: 18px;
-  weight: bold;
-}
+p {
+  font: {
+    family: Helvetica, sans-serif;
+    size: 18px;
+    weight: bold;
+  }
 
-text: {
-  align: center;
-  transform: lowercase;
-  overflow: hidden;
+  text: {
+    align: center;
+    transform: lowercase;
+    overflow: hidden;
+  }
 }
 ```
 
 转换为 CSS 代码：
 
 ```css
-font-family: Helvetica, sans-serif;
-font-size: 18px;
-font-weight: bold;
-
-text-align: center;
-text-transform: lowercase;
-text-overflow: hidden;
+p {
+  font-family: Helvetica, sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  text-transform: lowercase;
+  text-overflow: hidden;
+}
 ```
 
 # 5、Sass @import 与 Partial
@@ -599,5 +602,3 @@ Sass 定义了各种类型的函数，这些函数我们可以通过 CSS 语句�
 | 5   | [Sass 选择器相关函数](https://www.runoob.com/sass/sass-selector-func.html)                 |
 | 6   | [Sass Introspection 相关函数](https://www.runoob.com/sass/sass-introspection-func.html) |
 | 7   | [Sass 颜色相关函数](https://www.runoob.com/sass/sass-color-func.html)                     |
-
-

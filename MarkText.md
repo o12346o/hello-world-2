@@ -67,6 +67,7 @@
 |:---------:|:---------:|:----------------:|:---:|
 | Paragraph | 调整行距紧密    | ctrl + alt + L   |     |
 | Paragraph | 新建表格      | ctrl + shift + T |     |
+| Paragraph | 新建表格行     | ctrl + enter     |     |
 | Paragraph | 标题降级      | ctrl + -         |     |
 | Paragraph | 标题升级      | ctrl + Plus      |     |
 | Paragraph | 插入水平线     | ctrl + shift + U |     |

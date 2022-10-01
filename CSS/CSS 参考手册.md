@@ -284,7 +284,7 @@
 | [display](https://www.runoob.com/cssref/pr-class-display.html)       | 规定元素应该生成的框的类型              |
 | [float](https://www.runoob.com/cssref/pr-class-float.html)           | 规定框是否应该浮动                  |
 | [left](https://www.runoob.com/cssref/pr-pos-left.html)               | 设置定位元素左外边距边界与其包含块左边界之间的偏移  |
-| [overflow](https://www.runoob.com/cssref/pr-pos-overflow.html)<br>   | 规定当内容溢出元素框时发生的事情           |
+| [overflow](https://www.runoob.com/cssref/pr-pos-overflow.html)       | 规定当内容溢出元素框时发生的事情           |
 | [position](https://www.runoob.com/cssref/pr-class-position.html)     | 规定元素的定位类型                  |
 | [right](https://www.runoob.com/cssref/pr-pos-right.html)             | 设置定位元素右外边距边界与其包含块右边界之间的偏移  |
 | [top](https://www.runoob.com/cssref/pr-pos-top.html)                 | 设置定位元素的上外边距边界与其包含块上边界之间的偏移 |
