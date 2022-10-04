@@ -82,6 +82,8 @@ module: {
   },
 ```
 
+先使用 less-loader， 再使用 css-loader， 最后使用 style-loader。
+
 ## 处理 sass 资源
 
 ---

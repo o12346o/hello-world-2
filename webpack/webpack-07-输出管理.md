@@ -65,4 +65,4 @@ npm install --save-dev html-webpack-plugin
  };
 ```
 
-HtmlWebpackPlugin 可以依据 html 模板自动生成新的 html 文件，新的 html 文件和模板结构一致，并自动引入打包后的文件。
+在我们构建之前，你应该了解，虽然在 `dist/` 文件夹我们已经有了 `index.html` 这个文件，然而 `HtmlWebpackPlugin` 还是会默认生成它自己的 `index.html` 文件。也就是说，它会用新生成的 `index.html` 文件，替换我们的原有文件。
