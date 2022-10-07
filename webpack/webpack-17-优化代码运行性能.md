@@ -229,13 +229,13 @@ plugins: [
 
 ### 怎么用
 
-1、下载包
+#### 1、下载包
 
 ```powershell
 npm install --save-dev @vue/preload-webpack-plugin
 ```
 
-2、配置
+#### 2、配置
 
 ```js
 const PreloadWebpackPlugin = require('@vue/preload-webpack-plugin');
@@ -260,15 +260,99 @@ plugins: [
 
 ### 怎么用
 
+1、所有文件名都加上 contenthash ，contenthash 会根据文件内容变化。当文件内容不变时，contenthash 不变。
+
+```js
+ new MiniCssExtractPlugin({ // 将 css 提取成单独的文件
+      filename: "static/css/main.[contenthash:10].css",
+      chunkFilename: "static/css/[name].chunk.[contenthash:10].css",
+ }),
+```
+
+2、将运行时的 chunk 文件提取出来：
+
+```js
+optimization: [
+    runtimeChunk: { // 运行时的chunk文件
+      name: entrypoint => `runtime~${entrypoint.name}.js`
+    }
+]
+```
+
+设置 runtimeChunk 是将包含`chunks 映射关系`的 list单独从 main.js里提取出来，因为每一个 chunk 的 id 基本都是基于内容 hash 出来的，所以每次改动都会影响它，如果不将它提取出来的话，等于main.js每次都会改变。缓存就失效了。设置runtimeChunk之后，webpack就会生成一个个runtime~xxx.js的文件。  
+然后每次更改所谓的运行时代码文件时，打包构建时main.js的hash值是不会改变的。如果每次项目更新都会更改main.js的hash值，那么用户端浏览器每次都需要重新加载变化的main.js，如果项目大切优化分包没做好的话会导致第一次加载很耗时，导致用户体验变差。现在设置了runtimeChunk，就解决了这样的问题。所以`这样做的目的是避免文件的频繁变更导致浏览器缓存失效，所以其是更好的利用缓存。提升用户体验。`
+
 ## Core.js
 
 ---
 
 ### 为什么
 
+使用 babel  对 js 代码进行兼容性处理，其中使用 @babel/preset-env 智能预设来处理兼容性问题。它能将 es6 的一些语法进行编译转换。
+
+但是 async 函数、promise 对象、数组的一些方法等，它没法处理。
+
+js 代码仍然存在兼容性问题。
+
 ### 是什么
 
+`core-js` 是专门用来做 es6 及以上 api 的 `polyfill` 。
+
+`polyfill` 叫做垫片、补丁。就是用社区上提供的一段代码，在不兼容的浏览器上，使用该新特性。
+
 ### 怎么用
+
+main.js 文件中使用 Promise ：
+
+```js
+new Promise((resolve) => {
+    setTimeout(() => {
+        resolve()
+    },1000)
+})
+```
+
+#### 1、下载包
+
+```powershell
+npm i core-js
+```
+
+#### 2、手动全部引入
+
+main.js 文件中：
+
+```js
+import "core-js"
+```
+
+缺点：会引入全部兼容性代码，体积太大了。
+
+#### 3、手动按需引入
+
+main.js 文件中：
+
+```js
+import "core-js/es/promise"
+```
+
+#### 4、自动按需引入
+
+main.js 文件中无需配置，在 babel.config.js 文件中：
+
+```js
+module.exports = {
+    presets: [
+        [
+            "@babel/preset-env",
+            {
+                useBuiltIns: "usage", // 按需加载自动引入
+                corejs: 3,
+            }
+        ],
+    ],
+}
+```
 
 ## PWA
 
@@ -276,6 +360,57 @@ plugins: [
 
 ### 为什么
 
+开发 web App 项目，项目一旦处于网络离线情况，就没法访问了。
+
+希望给项目提供离线体验。
+
 ### 是什么
 
+渐进式网路应用程序（progressive web application -PWA）：是一种可以提供类似于 native app（原生应用程序）体验的 web App 的技术。
+
+其中最重要的是，在离线（offline）时程序能够继续运行功能。
+
+内部通过 Service Workers 技术实现。
+
 ### 怎么用
+
+#### 1、下载包
+
+```powershell
+npm i workbox-webpack-plugin -D
+```
+
+#### 2、修改配置文件
+
+```js
+const WorkboxPlugin = require("workbox-webpack-plugin");
+
+module.exports = {
+  plugins: [
+    new WorkboxPlugin.GenerateSw({
+      clientsClaim: true,
+      skipWaiting: true,
+    }),
+  ],
+}
+```
+
+#### 3、注册 service Worker
+
+main.js 文件中：
+
+```js
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js').then(registration => {
+      console.log('SW registered: ', registration);
+    }).catch(registrationError => {
+      console.log('SW registration failed: ', registrationError);
+    });
+  });
+}
+```
+
+#### 4、使用 service Worker
+
+在脱机状态下，代码加载履行者是service Worker。
