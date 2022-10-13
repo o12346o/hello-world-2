@@ -173,15 +173,15 @@
 
 ## 内容生成属性(Generated Content Properties)
 
-| 属性                                                                               | 说明                                  |
-| -------------------------------------------------------------------------------- | ----------------------------------- |
-| [content](https://www.runoob.com/cssref/pr-gen-content.html)                     | 与 :before 以及 :after 伪元素配合使用，来插入生成内容 |
-| [counter-increment](https://www.runoob.com/cssref/pr-gen-counter-increment.html) | 递增或递减一个或多个计数器                       |
-| [counter-reset](https://www.runoob.com/cssref/pr-gen-counter-reset.html)         | 创建或重置一个或多个计数器                       |
-| [quotes](https://www.runoob.com/cssref/pr-gen-quotes.html)                       | 设置嵌套引用的引号类型                         |
-| crop                                                                             | 允许replaced元素只是作为一个对象代替整个对象的矩形区域     |
-| move-to                                                                          | 从流中删除元素，然后在文档中后面的点上重新插入。            |
-| page-policy                                                                      | 判定基于页面的给定元素的适用于计数器的字符串值             |
+| 属性                                                                               | 说明                                    |
+| -------------------------------------------------------------------------------- | ------------------------------------- |
+| [content](https://www.runoob.com/cssref/pr-gen-content.html)                     | 与 ::before 以及 ::after 伪元素配合使用，来插入生成内容 |
+| [counter-increment](https://www.runoob.com/cssref/pr-gen-counter-increment.html) | 递增或递减一个或多个计数器                         |
+| [counter-reset](https://www.runoob.com/cssref/pr-gen-counter-reset.html)         | 创建或重置一个或多个计数器                         |
+| [quotes](https://www.runoob.com/cssref/pr-gen-quotes.html)                       | 设置嵌套引用的引号类型                           |
+| crop                                                                             | 允许replaced元素只是作为一个对象代替整个对象的矩形区域       |
+| move-to                                                                          | 从流中删除元素，然后在文档中后面的点上重新插入。              |
+| page-policy                                                                      | 判定基于页面的给定元素的适用于计数器的字符串值               |
 
 ## 网格（Grid） 属性
 
