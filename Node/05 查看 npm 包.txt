@@ -1,0 +1,23 @@
+# 查看所有已经安装的 npm 软件包
+
+## 查看当前目录安装的软件包
+
+```
+npm list
+```
+
+## 查看全局安装的软件包
+
+```
+npm list
+```
+
+## 查看指定安装的软件包
+
+npm list <package-name>
+
+## 查看软件包在 npm 仓库上的最新版本
+
+```
+npm view <package-name> version
+```

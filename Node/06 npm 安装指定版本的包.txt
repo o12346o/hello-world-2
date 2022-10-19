@@ -1,0 +1,11 @@
+# npm 安装指导版本的软件包
+
+```
+npm install <package-name>@<version>
+```
+
+查找软件包的所有版本
+
+```
+npm view <package-name> versions
+```

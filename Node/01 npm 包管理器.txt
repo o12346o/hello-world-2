@@ -1,0 +1,68 @@
+# 安装所有依赖
+
+如果项目具有 package.json 文件，则通过运行：
+
+```
+npm install
+```
+
+它会在 node_modules 文件夹（如果尚不存在则会创建）中安装项目所需的所有东西。
+
+# 安装指定的包
+
+```
+npm install <package-name>
+```
+
+# 更新包
+
+```
+npm update
+```
+
+会自动检查所有的包，进行更新。
+
+也可以指定单个包进行更新：
+
+```
+npm update <package-name>
+```
+
+# 运行任务
+
+`package.json` 文件支持一种用于指定命令行任务（可通过使用以下方式运行）的格式：
+
+```
+npm run <task-name>
+```
+
+例如：
+
+```
+{
+  "scripts": {
+    "start-dev": "node lib/server-development",
+    "start": "node lib/server-production"
+  },
+}
+```
+
+使用此特性运行 Webpack 是很常见的：
+
+```
+{
+  "scripts": {
+    "watch": "webpack --watch --progress --colors --config webpack.conf.js",
+    "dev": "webpack --progress --colors --config webpack.conf.js",
+    "prod": "NODE_ENV=production webpack -p --config webpack.conf.js",
+  },
+}
+```
+
+因此可以运行如下，而不是输入那些容易忘记或输入错误的长命令：
+
+```
+$ npm run watch
+$ npm run dev
+$ npm run prod
+```
