@@ -1,0 +1,5 @@
+# vue-cli 2 创建一个项目
+
+```
+vue init webpack 项目名
+``` 

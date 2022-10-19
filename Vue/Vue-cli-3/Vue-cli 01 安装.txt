@@ -1,0 +1,24 @@
+# Vue-cli 安装
+
+## 安装
+
+```
+npm install -g @vue/cli
+# OR
+yarn global add @vue/cli
+``` 
+
+版本检查
+
+```
+vue --version
+```
+
+## 升级
+
+```
+npm update -g @vue/cli
+# OR
+yarn global upgrade --latest @vue/cli
+```
+
