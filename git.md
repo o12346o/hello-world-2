@@ -17,7 +17,8 @@
     //链接远程仓库
     
     git config --global user.name "用户名"
-    git config --global user.name "用户邮箱"
+    git config --global user.email "用户邮箱"
+    git config --list // 查看配置信息
     git remote add origin 仓库地址 //链接远程仓库
     
     git remote rm origin //删除链接远程仓库
