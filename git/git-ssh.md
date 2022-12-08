@@ -42,4 +42,32 @@ ssh -T git@github.com
 
 若返回 `Hi XXX! You've successfully authenticated, but Github does not provide shell access.` 内容，则证明添加成功。
 
+## 配置多个 SSH 公钥
 
+1. 生成一个公司用的SSH-Key
+
+```bash
+ssh-keygen -t rsa -C 'xxxxx@company.com' -f ~/.ssh/gitee_id_rsa
+```
+
+2. 生成一个github用的SSH-Key
+
+```bash
+ssh-keygen -t rsa -C 'xxxxx@qq.com' -f ~/.ssh/github_id_rsa
+```
+
+3. 在 ~/.ssh 目录下新建一个config文件，添加如下内容（其中Host和HostName填写git服务器的域名，IdentityFile指定私钥的路径）
+
+```bash
+# gitee
+Host gitee.com
+HostName gitee.com
+PreferredAuthentications publickey
+IdentityFile ~/.ssh/gitee_id_rsa
+
+# github
+Host github.com
+HostName github.com
+PreferredAuthentications publickey
+IdentityFile ~/.ssh/github_id_rsa
+```
