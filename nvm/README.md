@@ -25,13 +25,11 @@ nvm install node版本号
 ## 卸载指定版本的 node
 
 ```powershell
-nvm uninstall node版本号
+nvm uninstall node的版本号
 ```
 
 ## 使用指定版本的 node
 
 ```powershell
-nvm use node版本号
+nvm use node的版本号
 ```
-
-

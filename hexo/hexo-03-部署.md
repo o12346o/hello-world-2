@@ -28,14 +28,14 @@ deploy:
 
 ```
 deploy:
-  type: git
-  repo: <repository url-1> 
-  branch: [branch]
-  message: [message]
-  type: git
-  repo: <repository url-2> 
-  branch: [branch]
-  message: [message]
+  - type: git
+    repo: <repository url-1> 
+    branch: [branch]
+    message: [message]
+  - type: git
+    repo: <repository url-2> 
+    branch: [branch]
+    message: [message]
 ```
 
 ## 3、生成站点文件并推送至远程库。执行 `hexo clean` && `hexo deploy`。
