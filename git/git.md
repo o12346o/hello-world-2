@@ -58,6 +58,7 @@
     git checkout -b 分支名 //创建新分支
     git checkout 分支名 //切换分支
     git merge 分支名 //合并分支
+    git branch -u origin/test //修改连接的默认远程分支为test
     
     git push origin 分支名 //将分支推送到远程仓库
     git push origin master:分支名 //推送master到远程的分支
