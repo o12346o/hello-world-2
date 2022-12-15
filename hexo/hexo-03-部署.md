@@ -2,7 +2,7 @@
 
 ## 1、安装 hexo-deployer-git。
 
-```
+```bash
 $ npm install hexo-deployer-git --save
 ```
 
@@ -10,7 +10,7 @@ $ npm install hexo-deployer-git --save
 
 在 _config.yml 中修改参数：
 
-```
+```yml
 deploy:
   type: git
   repo: <repository url> 
@@ -26,16 +26,16 @@ deploy:
 
 可以配置多个远程仓库：
 
-```
+```yml
 deploy:
   - type: git
-    repo: <repository url-1> 
+    repo: <repository url-1> 
     branch: [branch]
     message: [message]
   - type: git
     repo: <repository url-2> 
     branch: [branch]
-    message: [message]
+    message: [message]
 ```
 
 ## 3、生成站点文件并推送至远程库。执行 `hexo clean` && `hexo deploy`。
