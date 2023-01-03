@@ -335,3 +335,45 @@ fetch("/api/users", {
 ```
 
 ### 【原理】手写 vite-plugin-mock
+
+#### 定义插件
+
+/plugins/VitePluginMock.js 文件中
+
+```js
+exposrt default (options) => { 
+    // 做的最主要的事情就是拦截http请求
+    // 例如，使用axios，会设置baseURL
+    // 当打给本地服务器时， viteserver服务器接管
+    return {
+        congfigServer(server){
+            // 服务器的相关配置
+            const mockStat = fs.statSync("mock")
+            const isDirectory  = mockStat.isDirectory()
+            let mockResult = []
+            if (isDirectory) {
+                //process.cwd()，获取当前执行的根目录
+                mockResult  = require(path.resolve(process.cwd(),"mock/index.js"))
+                console.log("result", mockResult)
+            }
+            server.middelwares.use((req, res, next) => {
+                // req, 请求对象
+                // res, 响应对象
+                // next(), 将处理结果交给下一个中间件
+                console.log("req", req.url)
+                // 检测我们请求的地址在 mockResult 里有没有
+                const matchItem = mockResult.find(mockDescriiptor => mockDescriptor === req.usl)
+                if(matchItem){
+                    console.log("进来了")
+                    const responseData = matchItem.response(req)
+                    console.log("responseData", responseData)
+                    // 强制设置一下请求头的格式为 json
+                    res.end(JSON.stringify(responseData)) // 异步，设置请求头步
+                } else {
+                    next()  // 交给下一个中间件
+                }
+            })
+        }
+    }
+}
+```
