@@ -44,6 +44,8 @@
    
    - 以<mark>管理员身份</mark>运行cmd命令：mysqld --initialize-insecure --user=mysql。
    - 等待完成后，会在安装目录生成data文件夹，打开文件夹，找到 .err 文件。发形随机产生的临时密码为空密码。
+   - 执行`mysqld install`  安装 mysql。
+     - 当出现安装失败时，可能是由于以前安装过mysql，未卸载完全。执行  `sc query mysql`查看是否有mysql，执行`sc delete mysql`清除以前的安装数据。然后重新安装即可。
 
 3. 启动 MySql 服务
    
