@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>js预览本地上传图片</title>
+</head>
+
+<body>
+  <input type="file" onchange="loadFile(event)">
+  <br />
+  <img id="img" height="200px" />
+
+  <script>
+    // 方式一
+    // const loadFile = function (event) {
+    //   const file = event.target.files[0] // 获取input上传的文件
+    //   const reader = new FileReader() // 创建FileRender对象
+    //   reader.readAsDataURL(file) // 调用readAsDataURL()方法读取文件
+    //   reader.onload = function () {
+    //     const base64string = reader.result // 拿到读取结果
+    //     const img = document.querySelector('#img')
+    //     img.src = base64string
+    //   }
+    // }
+
+    // 方式二
+    const loadFile = function (event) {
+      const file = event.target.files[0] // 获取input上传的文件
+      const blobUrl = window.URL.createObjectURL(file) // 得到blob对象路径
+      console.log(blobUrl)
+      const img = document.getElementById('img')
+      img.src = blobUrl
+    }
+  </script>
+</body>
+
+</html>
